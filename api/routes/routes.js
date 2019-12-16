@@ -13,7 +13,7 @@ module.exports = function(app) {
   // ****************************** USER ******************************
 
   // Crea usuari
-  app.post("/user", [UsersController.insert]);
+  app.post("/users", [UsersController.insert]);
 
   // Llista tots els usuaris
   app.get("/users", [
@@ -70,7 +70,7 @@ module.exports = function(app) {
   // ****************************** TRAM ******************************
 
   // Insert a new tram - Caution! do not repeat num_id
-  app.post("/tram", [
+  app.post("/trams", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
     TramsController.insert
@@ -84,30 +84,53 @@ module.exports = function(app) {
   ]);
 
   // Get tram by num_id
-  app.get("/trams_num_id/:tramId", [
+  app.get("/trams/:tramNumId", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.getByNumId
   ]);
 
   // Get tram by _id
-  app.get("/trams/:tramId", [
+  app.get("/trams_id/:tramId", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.getBy_Id
   ]);
   
-  // Get tram by _id
-  app.get("/ownTram/", [
+  // Get own tram
+  app.get("/ownTram", [
     AuthValidationMiddleware.validJWTNeeded,
+    VerifyUserMiddleware.hasValidTramId,
     TramsController.getOwnTram
   ]);
 
-  // Esborra usuari
+  // Esborra tram
   app.delete("/trams/:tramId", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
     TramsController.deleteBy_Id
   ]);
+
+  // Patch tram with custom state
+  app.patch("/trams/:tramNumId", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
+    TramsController.patchTramState
+  ]);
+
+  // Open tram
+  app.patch("/openTram/:tramNumId", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
+    TramsController.openTram
+  ]);
+
+  // Close tram
+  app.patch("/closeTram/:tramNumId", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
+    TramsController.closeTram
+  ]);
+
 
 };

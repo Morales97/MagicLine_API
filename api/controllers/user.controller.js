@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User');
 const crypto = require('crypto');
 
-
+// FUNCIONA
 // Insert a new user
 exports.insert = (req, res) => {
 
@@ -25,6 +25,7 @@ exports.insert = (req, res) => {
     });
  };
 
+// FUNCIONA
 // Get list of all users
 exports.getAll = (req, res) => {
     User.find({}, function(err, users) {
@@ -33,6 +34,7 @@ exports.getAll = (req, res) => {
     });
 };
 
+// FUNCIONA
 // Find a user by ID
 exports.getById = (req, res) => {
     User.findById(req.params.userId, function(err, user){
@@ -44,6 +46,7 @@ exports.getById = (req, res) => {
     });
 }
 
+// FUNCIONA
 // Delete user 
 exports.deleteById = (req, res) => {
     User.deleteOne({_id: req.params.userId}, function(err, result){
@@ -52,6 +55,7 @@ exports.deleteById = (req, res) => {
     });
 }
 
+// FUNCIONA
 // Patch user  
 exports.patchUser = (req, res) => {
     // encrypt password
@@ -74,6 +78,7 @@ exports.patchUser = (req, res) => {
     });
 }
 
+// FUNCIONA
 // Patch only user permission
 exports.patchUserPermission = (req, res) => {
     User.findById(req.params.userId, function (err, user) {

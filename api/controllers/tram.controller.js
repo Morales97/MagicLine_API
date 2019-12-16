@@ -5,6 +5,7 @@ const config = require('../../common/env.config');
 const OPEN = config.tramStates.OPEN;
 const CLOSED = config.tramStates.CLOSED;
 
+// FUNCIONA
 // Insert a new tram
 exports.insert = (req, res) => {
     // set permission level
@@ -18,6 +19,7 @@ exports.insert = (req, res) => {
     });
  };
 
+// FUNCIONA
 // Get list of all trams
 exports.getAll = (req, res) => {
     Tram.find({}, function(err, trams) {
@@ -26,6 +28,17 @@ exports.getAll = (req, res) => {
     });
 };
 
+// FUNCIONA
+// Find a tram by num_id
+exports.getByNumId = (req, res) => {
+    Tram.findOne({num_id: req.params.tramNumId}, function(err, tram){
+        if (err) res.send(err);
+        tram = tram.toJSON();
+        res.send(tram);
+    });
+}
+
+// FUNCIONA
 // Find a tram by _id
 exports.getBy_Id = (req, res) => {
     Tram.findById(req.params.tramId, function(err, tram){
@@ -35,22 +48,14 @@ exports.getBy_Id = (req, res) => {
     });
 }
 
-// Find a tram by num_id
-exports.getByNumId = (req, res) => {
-    Tram.find({num_id: req.params.tramId}, function(err, tram){
-        if (err) res.send(err);
-        tram = tram.toJSON();
-        res.send(tram);
-    });
-}
-
+// FUNCIONA
 // Find tram assigned to user
 exports.getOwnTram = (req, res) => {
     let userId = req.jwt.userId
     User.findById(userId, function(err, user){
         if (err) res.send(err);
         let tramNumId = user.tram_num_id;
-        Tram.find({num_id: tramNumId}, function(err, tram){
+        Tram.findOne({num_id: tramNumId}, function(err, tram){
             if (err) res.send(err);
             tram = tram.toJSON();
             res.send(tram);
@@ -58,46 +63,48 @@ exports.getOwnTram = (req, res) => {
     })
 }
 
+// FUNCIONA
 // Delete tram 
 exports.deleteBy_Id = (req, res) => {
-    Tram.deleteOne({_id: req.params._id}, function(err, result){
+    Tram.deleteOne({_id: req.params.tramId}, function(err, result){
         if (err) res.send(err);
         res.status(204).send({});   // send status 204 to indicate successfull
     });
 }
 
+// FUNCIONA
+// Canvia estat - funció de suport
+changeState = (req, res, state) => {
+    // 1. Trobem el _id a partir del num_id
+    Tram.findOne({num_id: req.params.tramNumId}, '_id', function (err, _id) {
+        if (err) res.send(err);
+        // 2. Trobem el tram i el modifiquem
+        // Motiu: només findById retorna un objecte Tram que permet fer tram.save
+        Tram.findById(_id, function (err, tram) {
+            if (err) res.send(err);
+            tram.state = state;
+            tram.save(function (err, updatedTram) {
+                if (err) res.send(err);
+                res.send(updatedTram);
+            });
+        }); 
+    });
+}
+
+// FUNCIONA
 // Patch tram state
-exports.patchTramState = (req, res) => {
-    Tram.find({num_id: req.params.numTram}, function (err, tram) {
-        if (err) res.send(err);
-        tram.state = req.body.state;
-        tram.save(function (err, updatedTram) {
-            if (err) res.send(err);
-            res.send(updatedTram);
-        });
-    });
+exports.patchTramState = (req, res, state) => {
+    changeState(req, res, req.body.state);
 }
 
-// Open tram - igual q patch però predefinit per obrir, aixi no cal request body
+// FUNCIONA
+// Open tram 
 exports.openTram = (req, res) => {
-    Tram.find({num_id: req.params.numTram}, function (err, tram) {
-        if (err) res.send(err);
-        tram.state = OPEN;
-        tram.save(function (err, updatedTram) {
-            if (err) res.send(err);
-            res.send(updatedTram);
-        });
-    });
+    changeState(req, res, OPEN);
 }
 
+// FUNCIONA
 // Close tram 
 exports.closeTram = (req, res) => {
-    Tram.find({num_id: req.params.numTram}, function (err, tram) {
-        if (err) res.send(err);
-        tram.state = CLOSED;
-        tram.save(function (err, updatedTram) {
-            if (err) res.send(err);
-            res.send(updatedTram);
-        });
-    });
+    changeState(req, res, CLOSED);
 }
