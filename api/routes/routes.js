@@ -119,14 +119,14 @@ module.exports = function(app) {
   ]);
 
   // Open tram
-  app.patch("/openTram/:tramNumId", [
+  app.post("/openTram/:tramNumId", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.openTram
   ]);
 
   // Close tram
-  app.patch("/closeTram/:tramNumId", [
+  app.post("/closeTram/:tramNumId", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.closeTram

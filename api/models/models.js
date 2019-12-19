@@ -8,7 +8,7 @@ const userSchema = new Schema({
     email: String,
     password: String,
     permissionLevel: Number,
-    tram_num_id: Number
+    tram_num_id: Number         // enllaça l'usuari amb un tram si (user.tram_num_id == tram.num_id)
 });
 
 

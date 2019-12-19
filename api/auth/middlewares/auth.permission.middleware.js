@@ -53,18 +53,17 @@ exports.onlyOwnerOfTramOrAdmin = (req, res, next) => {
     } 
     
     let userId = req.jwt.userId;
-    let tram_num_id = 0;
 
     User.findById(userId, function(err, user){
         if (err) return res.status(403).send("Not allowed");
         if(!user.tram_num_id) return res.status(403).send("No tram assigned");
-        tram_num_id = user.tram_num_id;
-    })
 
-    if(req.params && req.params.num_id && tram_num_id === req.params.num_id){
-        return next();
-    } else {
-        return res.status(403).send("Only admin or tram owner");
-    }
+        var tram_typed = (+req.params.tramNumId);
+        if(req.params && req.params.tramNumId && user.tram_num_id === tram_typed){
+            return next();
+        } else {
+            return res.status(403).send("Only admin or tram owner");
+        }
+    })
 
 }

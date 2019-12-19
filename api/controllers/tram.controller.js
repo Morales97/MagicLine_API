@@ -20,12 +20,12 @@ exports.insert = (req, res) => {
  };
 
 // FUNCIONA
-// Get list of all trams
+// Get list of all trams sorted
 exports.getAll = (req, res) => {
-    Tram.find({}, function(err, trams) {
+    Tram.find({}, {_id: 0, name: 1, num_id: 1, state: 1}, function(err, trams) {
     if (err) res.send(err);
         res.json(trams);
-    });
+    }).sort({num_id: 1});
 };
 
 // FUNCIONA
@@ -100,11 +100,13 @@ exports.patchTramState = (req, res, state) => {
 // FUNCIONA
 // Open tram 
 exports.openTram = (req, res) => {
+    console.log("open tram")
     changeState(req, res, OPEN);
 }
 
 // FUNCIONA
 // Close tram 
 exports.closeTram = (req, res) => {
+    console.log("close tram")
     changeState(req, res, CLOSED);
 }

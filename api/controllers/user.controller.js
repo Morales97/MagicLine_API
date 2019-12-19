@@ -26,12 +26,12 @@ exports.insert = (req, res) => {
  };
 
 // FUNCIONA
-// Get list of all users
+// Get list of all users ordered by tram_num_id
 exports.getAll = (req, res) => {
-    User.find({}, function(err, users) {
+    User.find({}, {_id: 0, username: 1, tram_num_id: 1, permissionLevel: 1 }, function(err, users) {
     if (err) res.send(err);
         res.json(users);
-    });
+    }).sort({tram_num_id: 1});
 };
 
 // FUNCIONA

@@ -53,7 +53,10 @@ exports.hasValidTramId = (req, res, next) => {
     let userId = req.jwt.userId;
     User.findById(userId, function(err, user){
         if (err) return res.send(err);
-        if (!user.tram_id) {
+        if (!user){
+            return res.status(404).send("User not found")
+        }
+        if (!user.tram_num_id) {
             return res.status(404).send("User does not have a tram assigned")
         }
         return next();
