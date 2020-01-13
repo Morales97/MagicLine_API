@@ -96,6 +96,10 @@ changeState = (req, res, state, desc) => {
 // Crea un nou event que registra l'acció
 createEvent = (tram, req, desc) => {
 
+    let userId = req.jwt.userId
+
+
+
     var new_event = new Event({
         tram_id: tram._id,
         tram_num: tram.num,
@@ -105,7 +109,11 @@ createEvent = (tram, req, desc) => {
     });
 
     console.log(desc);
-    new_event.save();
+
+    User.findById(userId, function(err, user) {
+        if (!err) new_event.username = user.username;
+        new_event.save();
+    })
     return;
 }
 
