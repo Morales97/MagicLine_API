@@ -56,7 +56,7 @@ exports.hasValidTramId = (req, res, next) => {
         if (!user){
             return res.status(404).send("User not found")
         }
-        if (!user.tram_num_id) {
+        if (!user.tram_num) {
             return res.status(404).send("User does not have a tram assigned")
         }
         return next();

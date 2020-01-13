@@ -15,6 +15,8 @@ module.exports = function(app) {
   // Crea usuari
   app.post("/users", [UsersController.insert]);
 
+  app.get("/test", UsersController.getAll);
+
   // Llista tots els usuaris
   app.get("/users", [
     AuthValidationMiddleware.validJWTNeeded,
@@ -69,7 +71,7 @@ module.exports = function(app) {
 
   // ****************************** TRAM ******************************
 
-  // Insert a new tram - Caution! do not repeat num_id
+  // Insert a new tram 
   app.post("/trams", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
@@ -83,11 +85,11 @@ module.exports = function(app) {
     TramsController.getAll
   ]);
 
-  // Get tram by num_id
-  app.get("/trams/:tramNumId", [
+  // Get tram by num
+  app.get("/trams/:tramNum", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
-    TramsController.getByNumId
+    TramsController.getByNum
   ]);
 
   // Get tram by _id
@@ -112,21 +114,21 @@ module.exports = function(app) {
   ]);
 
   // Patch tram with custom state
-  app.patch("/trams/:tramNumId", [
+  app.patch("/trams/:tramNum", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.patchTramState
   ]);
 
   // Open tram
-  app.post("/openTram/:tramNumId", [
+  app.post("/openTram/:tramNum", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.openTram
   ]);
 
   // Close tram
-  app.post("/closeTram/:tramNumId", [
+  app.post("/closeTram/:tramNum", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.closeTram

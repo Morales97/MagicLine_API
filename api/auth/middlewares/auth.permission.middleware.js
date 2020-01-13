@@ -56,10 +56,10 @@ exports.onlyOwnerOfTramOrAdmin = (req, res, next) => {
 
     User.findById(userId, function(err, user){
         if (err) return res.status(403).send("Not allowed");
-        if(!user.tram_num_id) return res.status(403).send("No tram assigned");
+        if(!user.tram_num) return res.status(403).send("No tram assigned");
 
-        var tram_typed = (+req.params.tramNumId);
-        if(req.params && req.params.tramNumId && user.tram_num_id === tram_typed){
+        var tram_typed = (+req.params.tramNum);
+        if(req.params && req.params.tramNum && user.tram_num === tram_typed){
             return next();
         } else {
             return res.status(403).send("Only admin or tram owner");
