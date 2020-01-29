@@ -1,5 +1,6 @@
 const UsersController = require("../controllers/user.controller");
 const TramsController = require("../controllers/tram.controller");
+const IncidentsController = require("../controllers/incident.controller");
 const VerifyUserMiddleware = require("../auth/middlewares/verify.user.middleware");
 const AuthorizationController = require("../auth/controllers/authorization.controller");
 const AuthValidationMiddleware = require("../auth/middlewares/auth.validation.middleware");
@@ -127,6 +128,13 @@ module.exports = function(app) {
     TramsController.openTram
   ]);
 
+  // Pas escombra
+  app.post("/escombra/:tramNum", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
+    TramsController.pasEscombra
+  ]);
+
   // Close tram
   app.post("/closeTram/:tramNum", [
     AuthValidationMiddleware.validJWTNeeded,
@@ -134,5 +142,12 @@ module.exports = function(app) {
     TramsController.closeTram
   ]);
 
+
+// ****************************** INCIDENTS ******************************
+
+  // Crea un incident 
+  app.post("/incident", [
+    IncidentsController.create
+  ])
 
 };

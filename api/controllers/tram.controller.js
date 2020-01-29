@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     Event = mongoose.model('Event');
 const config = require('../../common/env.config');
 const OPEN = config.tramStates.OPEN;
+const ESCOMBRANT = config.tramStates.ESCOMBRANT;
 const CLOSED = config.tramStates.CLOSED;
 
 // FUNCIONA
@@ -11,6 +12,11 @@ const CLOSED = config.tramStates.CLOSED;
 exports.insert = (req, res) => {
     // set permission level
     req.body.state = CLOSED;
+    if(!req.body.avituallament){
+        req.body.avituallament = false;
+    }
+    req.body.material_rebut = false;
+    req.body.avituallament_rebut = false;
 
     // save tram
     var new_tram = new Tram(req.body);
@@ -98,17 +104,13 @@ createEvent = (tram, req, desc) => {
 
     let userId = req.jwt.userId
 
-
-
     var new_event = new Event({
         tram_id: tram._id,
         tram_num: tram.num,
-        user_id: req.jwt.userId,
+        user_id: userId,
         date: Date(),
         description: desc
     });
-
-    console.log(desc);
 
     User.findById(userId, function(err, user) {
         if (!err) new_event.username = user.username;
@@ -130,6 +132,11 @@ exports.patchTramState = (req, res, state) => {
 exports.openTram = (req, res) => {
     console.log("open tram")
     changeState(req, res, OPEN, 'Open tram');
+}
+
+exports.pasEscombra = (req, res) => {
+    console.log("escombrant tram")
+    changeState(req, res, ESCOMBRANT, 'Pas equip escombra')
 }
 
 // FUNCIONA
