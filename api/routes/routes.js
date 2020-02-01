@@ -16,8 +16,6 @@ module.exports = function(app) {
   // Crea usuari
   app.post("/users", [UsersController.insert]);
 
-  app.get("/test", UsersController.getAll);
-
   // Llista tots els usuaris
   app.get("/users", [
     AuthValidationMiddleware.validJWTNeeded,
@@ -81,8 +79,8 @@ module.exports = function(app) {
 
   // Get all trams
   app.get("/trams", [
-    AuthValidationMiddleware.validJWTNeeded,
-    AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
+    // AuthValidationMiddleware.validJWTNeeded,
+    // AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
     TramsController.getAll
   ]);
 
