@@ -3,10 +3,11 @@ var mongoose = require('mongoose'),
     Tram = mongoose.model('Tram'),
     Incident = mongoose.model('Incident'),
     Event = mongoose.model('Event');
+var ObjectId = require('mongodb').ObjectID;
 const config = require('../../common/env.config');
-const LLEU = config.tramStates.LLEU;
-const GREU = config.tramStates.GREU;
-const MOLT_GREU = config.tramStates.MOLT_GREU;
+const LLEU = config.incidentGravity.LLEU;
+const GREU = config.incidentGravity.GREU;
+const MOLT_GREU = config.incidentGravity.MOLT_GREU;
 
 // Create a new incident
 exports.create = (req, res) => {
@@ -31,3 +32,47 @@ exports.create = (req, res) => {
         });
     });
  };
+
+ // Change category
+ exports.changeCategory = (req, res) => {
+
+    Incident.findById(req.body._id, function(err, incident){
+        if(err) res.send(err);
+
+        incident.category = req.body.category
+        incident.save(function (err, updatedIncident){
+            if(err) res.send(err);
+            res.send(updatedIncident);
+        })
+    })
+ }
+
+
+
+// ************* MIDDLEWARE *************
+
+ exports.hasValidIdAndCategory = (req, res, next) => {
+
+    if(req.body.category != LLEU && req.body.category != GREU && req.body.category != MOLT_GREU) {
+        return res.status(400).send("Categoria no admesa")
+    }
+
+    if(req.body._id == null) {
+        return res.status(400).send("Falta incident _id")
+    }
+
+    if(!ObjectId.isValid(req.body._id)){
+        return res.status(400).send("_id not valid")
+    }
+   
+    Incident.countDocuments({_id: req.body._id}, function (err, count){ 
+        if(count>0){
+            return next();
+        }
+        return res.status(400).send("No _id match")
+    }); 
+
+    
+
+    //Incident.findById(req.body._id, function(err, incident){
+}

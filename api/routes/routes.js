@@ -112,13 +112,6 @@ module.exports = function(app) {
     TramsController.deleteBy_Id
   ]);
 
-  // Patch tram with custom state
-  app.patch("/trams/:tramNum", [
-    AuthValidationMiddleware.validJWTNeeded,
-    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
-    TramsController.patchTramState
-  ]);
-
   // Open tram
   app.post("/openTram/:tramNum", [
     AuthValidationMiddleware.validJWTNeeded,
@@ -146,6 +139,11 @@ module.exports = function(app) {
   // Crea un incident 
   app.post("/incident", [
     IncidentsController.create
+  ])
+
+  app.post("/incidentCategory", [
+    IncidentsController.hasValidIdAndCategory,
+    IncidentsController.changeCategory
   ])
 
 };

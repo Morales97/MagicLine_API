@@ -119,13 +119,6 @@ createEvent = (tram, req, desc) => {
     return;
 }
 
-// Patch tram state
-exports.patchTramState = (req, res, state) => {
-    if (req.body.state == OPEN)
-        this.openTram(req, res);
-    else 
-        this.closeTram(req, res);
-}
 
 // FUNCIONA
 // Open tram 

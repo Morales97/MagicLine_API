@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-// Usuari
+// **** Usuari ****
 const UserSchema = new Schema({
     username: String,
     email: String,
@@ -11,7 +11,7 @@ const UserSchema = new Schema({
     tram_num: Number            // enllaça l'usuari amb un tram si (user.tram_num == tram.num)
 });
 
-// Tram
+// **** Tram ****
 const TramSchema = new Schema({
     // Informació general
     num: { 
@@ -33,7 +33,7 @@ const TramSchema = new Schema({
     }]
 });
 
-// Incidènica: Un problema que reporta el coordinador de tram
+// **** Incidènica ****: Un problema que reporta el coordinador de tram
 const IncidentSchema = new Schema({
     // Tram
     tram_id: ObjectId,
@@ -52,7 +52,7 @@ const IncidentSchema = new Schema({
     solved: Boolean,
 })
 
-// Event: Qualsevol acció que faci un coordinador o administrador genera un event que ho registra
+// **** Event ****: Qualsevol acció que faci un coordinador o administrador genera un event que ho registra
 const EventSchema = new Schema({
     // Tram al que fa referència
     tram_id: {                  
