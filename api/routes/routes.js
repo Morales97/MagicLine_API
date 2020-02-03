@@ -138,12 +138,27 @@ module.exports = function(app) {
 
   // Crea un incident 
   app.post("/incident", [
+    AuthValidationMiddleware.validJWTNeeded,
     IncidentsController.create
   ])
 
   app.post("/incidentCategory", [
-    IncidentsController.hasValidIdAndCategory,
+    AuthValidationMiddleware.validJWTNeeded,
+    IncidentsController.hasValidCategory,
+    IncidentsController.hasValidId,
     IncidentsController.changeCategory
+  ])
+
+  app.post("/incidentSolve", [
+    AuthValidationMiddleware.validJWTNeeded,
+    IncidentsController.hasValidId,
+    IncidentsController.solveIncident
+  ])
+
+  app.post("/incidentComment", [
+    AuthValidationMiddleware.validJWTNeeded,
+    IncidentsController.hasValidId,
+    IncidentsController.commentIncident
   ])
 
 };

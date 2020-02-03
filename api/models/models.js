@@ -41,12 +41,14 @@ const IncidentSchema = new Schema({
         type: Number,
         required: true
     },
+    creator: String,           // Usuari que crea la indicènica
 
     // Informació de la incidència
     description: String,
     comments: [{                // array de comentaris
         username: String,       // usuari que fa el comentari (coordi_X o admin)
-        body: String            // comentari
+        comment: String,         // comentari
+        date: Date
     }],
     category: String,           // 3 categories: LLEU, GREU, MOLT GREU
     solved: Boolean,
@@ -77,7 +79,7 @@ const EventSchema = new Schema({
         type: String,
         required: true
     },
-    incidencia_id: ObjectId     // en el cas que es tracti d'una incidència, per identificar-la
+    incident_id: ObjectId     // en el cas que es tracti d'una incidència, per identificar-la
 })
 
 

@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Tram = mongoose.model('Tram'),
     Event = mongoose.model('Event');
+const EventController = require('./event.controller')
 const config = require('../../common/env.config');
 const OPEN = config.tramStates.OPEN;
 const ESCOMBRANT = config.tramStates.ESCOMBRANT;
@@ -90,7 +91,7 @@ changeState = (req, res, state, desc) => {
         Tram.findById(_id, function (err, tram) {
             if (err) res.send(err);
             tram.state = state;
-            createEvent(tram, req, desc);
+            EventController.createEvent(tram, req, desc);
             tram.save(function (err, updatedTram) {
                 if (err) res.send(err);
                 res.send(updatedTram);
@@ -98,27 +99,6 @@ changeState = (req, res, state, desc) => {
         }); 
     });
 }
-
-// Crea un nou event que registra l'acció
-createEvent = (tram, req, desc) => {
-
-    let userId = req.jwt.userId
-
-    var new_event = new Event({
-        tram_id: tram._id,
-        tram_num: tram.num,
-        user_id: userId,
-        date: Date(),
-        description: desc
-    });
-
-    User.findById(userId, function(err, user) {
-        if (!err) new_event.username = user.username;
-        new_event.save();
-    })
-    return;
-}
-
 
 // FUNCIONA
 // Open tram 
