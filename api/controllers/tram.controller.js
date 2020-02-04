@@ -2,8 +2,10 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Tram = mongoose.model('Tram'),
     Event = mongoose.model('Event');
+const EventController = require('./event.controller')
 const config = require('../../common/env.config');
 const OPEN = config.tramStates.OPEN;
+const ESCOMBRANT = config.tramStates.ESCOMBRANT;
 const CLOSED = config.tramStates.CLOSED;
 
 // FUNCIONA
@@ -11,6 +13,11 @@ const CLOSED = config.tramStates.CLOSED;
 exports.insert = (req, res) => {
     // set permission level
     req.body.state = CLOSED;
+    if(!req.body.avituallament){
+        req.body.avituallament = false;
+    }
+    req.body.material_rebut = false;
+    req.body.avituallament_rebut = false;
 
     // save tram
     var new_tram = new Tram(req.body);
@@ -84,7 +91,7 @@ changeState = (req, res, state, desc) => {
         Tram.findById(_id, function (err, tram) {
             if (err) res.send(err);
             tram.state = state;
-            createEvent(tram, req, desc);
+            EventController.createEvent(tram, req, desc);
             tram.save(function (err, updatedTram) {
                 if (err) res.send(err);
                 res.send(updatedTram);
@@ -93,6 +100,7 @@ changeState = (req, res, state, desc) => {
     });
 }
 
+<<<<<<< HEAD
 // Crea un nou event que registra l'acció
 createEvent = (tram, req, desc) => {
 
@@ -123,11 +131,18 @@ exports.patchTramState = (req, res, state) => {
         this.closeTram(req, res);
 }
 
+=======
+>>>>>>> bfe357c8f676c8847a60316000f6aa4b21937f7a
 // FUNCIONA
 // Open tram
 exports.openTram = (req, res) => {
     console.log("open tram")
     changeState(req, res, OPEN, 'Open tram');
+}
+
+exports.pasEscombra = (req, res) => {
+    console.log("escombrant tram")
+    changeState(req, res, ESCOMBRANT, 'Pas equip escombra')
 }
 
 // FUNCIONA

@@ -1,5 +1,6 @@
 const UsersController = require("../controllers/user.controller");
 const TramsController = require("../controllers/tram.controller");
+const IncidentsController = require("../controllers/incident.controller");
 const VerifyUserMiddleware = require("../auth/middlewares/verify.user.middleware");
 const AuthorizationController = require("../auth/controllers/authorization.controller");
 const AuthValidationMiddleware = require("../auth/middlewares/auth.validation.middleware");
@@ -14,8 +15,6 @@ module.exports = function(app) {
 
   // Crea usuari
   app.post("/users", [UsersController.insert]);
-
-  app.get("/test", UsersController.getAll);
 
   // Llista tots els usuaris
   app.get("/users", [
@@ -71,7 +70,7 @@ module.exports = function(app) {
 
   // ****************************** TRAM ******************************
 
-  // Insert a new tram 
+  // Insert a new tram
   app.post("/trams", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
@@ -80,8 +79,8 @@ module.exports = function(app) {
 
   // Get all trams
   app.get("/trams", [
-    AuthValidationMiddleware.validJWTNeeded,
-    AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
+    // AuthValidationMiddleware.validJWTNeeded,
+    // AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
     TramsController.getAll
   ]);
 
@@ -98,7 +97,7 @@ module.exports = function(app) {
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.getBy_Id
   ]);
-  
+
   // Get own tram
   app.get("/ownTram", [
     AuthValidationMiddleware.validJWTNeeded,
@@ -113,18 +112,18 @@ module.exports = function(app) {
     TramsController.deleteBy_Id
   ]);
 
-  // Patch tram with custom state
-  app.patch("/trams/:tramNum", [
-    AuthValidationMiddleware.validJWTNeeded,
-    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
-    TramsController.patchTramState
-  ]);
-
   // Open tram
   app.post("/openTram/:tramNum", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.openTram
+  ]);
+
+  // Pas escombra
+  app.post("/escombra/:tramNum", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
+    TramsController.pasEscombra
   ]);
 
   // Close tram
@@ -134,5 +133,32 @@ module.exports = function(app) {
     TramsController.closeTram
   ]);
 
+
+// ****************************** INCIDENTS ******************************
+
+  // Crea un incident
+  app.post("/incident", [
+    AuthValidationMiddleware.validJWTNeeded,
+    IncidentsController.create
+  ])
+
+  app.post("/incidentCategory", [
+    AuthValidationMiddleware.validJWTNeeded,
+    IncidentsController.hasValidCategory,
+    IncidentsController.hasValidId,
+    IncidentsController.changeCategory
+  ])
+
+  app.post("/incidentSolve", [
+    AuthValidationMiddleware.validJWTNeeded,
+    IncidentsController.hasValidId,
+    IncidentsController.solveIncident
+  ])
+
+  app.post("/incidentComment", [
+    AuthValidationMiddleware.validJWTNeeded,
+    IncidentsController.hasValidId,
+    IncidentsController.commentIncident
+  ])
 
 };

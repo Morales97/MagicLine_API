@@ -11,7 +11,13 @@ module.exports = {
         "ADMIN": 2048
     },
     "tramStates": {
-        "OPEN": "OPEN",
-        "CLOSED": "CLOSED"
+        "OPEN": "Obert",
+        "ESCOMBRANT": "Escombrant",
+        "CLOSED": "Tancat",
+    },
+    "incidentGravity": {
+        "LLEU": "Lleu",
+        "GREU": "Greu",
+        "MOLT_GREU": "Molt greu"
     }
 };
