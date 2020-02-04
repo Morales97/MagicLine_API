@@ -3,6 +3,11 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User');
 const crypto = require('crypto');
 
+// test
+exports.test = (req, res) => {
+    res.send("this is a test")
+}
+
 // FUNCIONA
 // Insert a new user
 exports.insert = (req, res) => {

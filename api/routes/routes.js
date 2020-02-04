@@ -11,6 +11,11 @@ const ADMIN = config.permissionLevels.ADMIN;
 const FREE = config.permissionLevels.NORMAL_USER;
 
 module.exports = function(app) {
+
+  // test
+  app.get("/test", UsersController.test);
+
+
   // ****************************** USER ******************************
 
   // Crea usuari
