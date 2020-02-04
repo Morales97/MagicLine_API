@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var fs = require('fs');
 var http = require('http');
-var https = require('https');
+/*var https = require('https');
 var privateKey  = fs.readFileSync('ssl_local/server.key');
 var certificate = fs.readFileSync('ssl_local/server.crt');
-var credentials = {key: privateKey, cert: certificate};
+var credentials = {key: privateKey, cert: certificate};*/
 
 // defining the Express app
 const app = express(),
@@ -35,10 +35,10 @@ routes(app);
 // Create an HTTP server and an HTTPS server, using SSL key generated for local use only
 // REMOVE FOR PRODUCTION
 var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
+// var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(port);
-httpsServer.listen(3001);
+// httpsServer.listen(3001);
 
 // start the server
 //app.listen(port) 
