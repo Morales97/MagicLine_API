@@ -65,7 +65,7 @@ exports.getOwnTram = (req, res) => {
 }
 
 // FUNCIONA
-// Delete tram 
+// Delete tram
 exports.deleteBy_Id = (req, res) => {
     Tram.deleteOne({_id: req.params.tramId}, function(err, result){
         if (err) res.send(err);
@@ -89,7 +89,7 @@ changeState = (req, res, state, desc) => {
                 if (err) res.send(err);
                 res.send(updatedTram);
             });
-        }); 
+        });
     });
 }
 
@@ -97,8 +97,6 @@ changeState = (req, res, state, desc) => {
 createEvent = (tram, req, desc) => {
 
     let userId = req.jwt.userId
-
-
 
     var new_event = new Event({
         tram_id: tram._id,
@@ -121,19 +119,19 @@ createEvent = (tram, req, desc) => {
 exports.patchTramState = (req, res, state) => {
     if (req.body.state == OPEN)
         this.openTram(req, res);
-    else 
+    else
         this.closeTram(req, res);
 }
 
 // FUNCIONA
-// Open tram 
+// Open tram
 exports.openTram = (req, res) => {
     console.log("open tram")
     changeState(req, res, OPEN, 'Open tram');
 }
 
 // FUNCIONA
-// Close tram 
+// Close tram
 exports.closeTram = (req, res) => {
     console.log("close tram")
     changeState(req, res, CLOSED, 'Close tram');
