@@ -30,7 +30,7 @@ exports.insert = (req, res) => {
 // FUNCIONA
 // Get list of all trams sorted
 exports.getAll = (req, res) => {
-    Tram.find({}, {_id: 0, name: 1, num: 1, state: 1}, function(err, trams) {
+    Tram.find({}, {_id: 0, name: 1, num: 1, state: 1, lat: 1, long: 1}, function(err, trams) {
     if (err) res.send(err);
         res.json(trams);
     }).sort({num: 1});
@@ -100,39 +100,6 @@ changeState = (req, res, state, desc) => {
     });
 }
 
-<<<<<<< HEAD
-// Crea un nou event que registra l'acció
-createEvent = (tram, req, desc) => {
-
-    let userId = req.jwt.userId
-
-    var new_event = new Event({
-        tram_id: tram._id,
-        tram_num: tram.num,
-        user_id: req.jwt.userId,
-        date: Date(),
-        description: desc
-    });
-
-    console.log(desc);
-
-    User.findById(userId, function(err, user) {
-        if (!err) new_event.username = user.username;
-        new_event.save();
-    })
-    return;
-}
-
-// Patch tram state
-exports.patchTramState = (req, res, state) => {
-    if (req.body.state == OPEN)
-        this.openTram(req, res);
-    else
-        this.closeTram(req, res);
-}
-
-=======
->>>>>>> bfe357c8f676c8847a60316000f6aa4b21937f7a
 // FUNCIONA
 // Open tram
 exports.openTram = (req, res) => {

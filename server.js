@@ -37,14 +37,12 @@ routes(app);
 var httpServer = http.createServer(app);
 //var httpsServer = https.createServer(credentials, app);
 
-<<<<<<< HEAD
+
 //httpServer.listen(3001);
 //httpsServer.listen(port);
 httpServer.listen(port);
-=======
-httpServer.listen(port);
-httpsServer.listen(3001);
->>>>>>> bfe357c8f676c8847a60316000f6aa4b21937f7a
+
+
 
 // start the server
 //app.listen(port)
