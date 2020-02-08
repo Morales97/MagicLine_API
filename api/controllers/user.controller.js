@@ -5,7 +5,8 @@ const crypto = require('crypto');
 
 // test
 exports.test = (req, res) => {
-    res.send("this is a test")
+    console.log("test")
+    res.status(200).send("this is a test")
 }
 
 // FUNCIONA

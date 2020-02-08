@@ -4,13 +4,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var fs = require('fs');
 var http = require('http');
-<<<<<<< HEAD
-var https = require('https');
-/*var privateKey  = fs.readFileSync('ssl_local/server.key');
-=======
 /*var https = require('https');
 var privateKey  = fs.readFileSync('ssl_local/server.key');
->>>>>>> cfa3188a76e2b6a0ef12f6dcba397d9830bbc279
 var certificate = fs.readFileSync('ssl_local/server.crt');
 var credentials = {key: privateKey, cert: certificate};*/
 
@@ -40,22 +35,13 @@ routes(app);
 // Create an HTTP server and an HTTPS server, using SSL key generated for local use only
 // REMOVE FOR PRODUCTION
 var httpServer = http.createServer(app);
-<<<<<<< HEAD
-//var httpsServer = https.createServer(credentials, app);
-=======
 // var httpsServer = https.createServer(credentials, app);
->>>>>>> cfa3188a76e2b6a0ef12f6dcba397d9830bbc279
 
 
 //httpServer.listen(3001);
 //httpsServer.listen(port);
 httpServer.listen(port);
-<<<<<<< HEAD
 
-
-=======
-// httpsServer.listen(3001);
->>>>>>> cfa3188a76e2b6a0ef12f6dcba397d9830bbc279
 
 // start the server
 //app.listen(port)
