@@ -23,13 +23,8 @@ module.exports = function(app) {
 
   // Llista tots els usuaris
   app.get("/users", [
-<<<<<<< HEAD
-    //AuthValidationMiddleware.validJWTNeeded,
-    //AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
-=======
     // AuthValidationMiddleware.validJWTNeeded,
     // AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
->>>>>>> cfa3188a76e2b6a0ef12f6dcba397d9830bbc279
     UsersController.getAll
   ]);
 
