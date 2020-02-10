@@ -22,14 +22,12 @@ const TramSchema = new Schema({
     name: String,
     username_coord: String,     // username del usuari coordinador del tram
     avituallament: Boolean,     // el tram té avituallament?
-    lat: {
-      type: Number,
-      required: true
-    },
-    long: {
-      type: Number,
-      required: true
-    },
+
+    pointList: [{               // Coordenades per dibuixar tram al mapa
+        lat: Number,
+        lng: Number
+    }],
+
     // Ítems
     state: String,              // 3 estats: OPEN, ESCOMBRANT, TANCAT
     material_rebut: Boolean,
