@@ -6,7 +6,7 @@ var fs = require('fs');
 var https = require('https');
 var privateKey  = fs.readFileSync('ssl_back_end/server.key');
 var certificate = fs.readFileSync('ssl_back_end/server.crt');
-var credentials = {key: privateKey, cert: certificate};
+var credentials = {key: privateKey, cert: certificate, passphrase: 'magiclineSSL'};
 
 // defining the Express app
 const app = express(),
