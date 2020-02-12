@@ -3,8 +3,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var fs = require('fs');
-var http = require('http');
-
+var https = require('https');
+var privateKey  = fs.readFileSync('ssl_back_end/server.key');
+var certificate = fs.readFileSync('ssl_back_end/server.crt');
+var credentials = {key: privateKey, cert: certificate};
 
 // defining the Express app
 const app = express(),
@@ -29,7 +31,9 @@ app.use(bodyParser.json());
 var routes = require('./api/routes/routes');
 routes(app);
 
-var httpServer = http.createServer(app);
-httpServer.listen(port);
+// Create an HTTPS server, using SSL key generated for local use only
+// REMOVE FOR PRODUCTION
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(port);
 
 console.log('listening on port 3000');
