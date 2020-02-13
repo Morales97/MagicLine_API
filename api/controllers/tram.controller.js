@@ -30,7 +30,7 @@ exports.insert = (req, res) => {
 // FUNCIONA
 // Get list of all trams sorted
 exports.getAll = (req, res) => {
-    Tram.find({}, {_id: 0, name: 1, num: 1, state: 1, pointList: 1}, function(err, trams) {
+    Tram.find({}, function(err, trams) {
     if (err) res.send(err);
         res.json(trams);
     }).sort({num: 1});
