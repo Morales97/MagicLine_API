@@ -41,6 +41,5 @@ exports.createEventIncident = (tram_id, tram_num, incident_id, req, desc) => {
         if (!err) new_event.username = user.username;
         new_event.save();
     })
-    console.log(new_event)
     return;
 }

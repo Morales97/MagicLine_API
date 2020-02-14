@@ -147,6 +147,10 @@ module.exports = function(app) {
     IncidentsController.create
   ])
 
+  app.get("/incidents", [
+    IncidentsController.getAll
+  ])
+
   app.post("/incidentCategory", [
     AuthValidationMiddleware.validJWTNeeded,
     IncidentsController.hasValidCategory,

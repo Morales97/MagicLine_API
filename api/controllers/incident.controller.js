@@ -10,6 +10,14 @@ const LLEU = config.incidentGravity.LLEU;
 const GREU = config.incidentGravity.GREU;
 const MOLT_GREU = config.incidentGravity.MOLT_GREU;
 
+exports.getAll = (req, res) => {
+
+    Incident.find({}, function(incs, err){
+        if (err) res.send(err);
+        res.send(incs)
+    }).sort({tram_num: 1})
+}
+
 // Create a new incident
 exports.create = (req, res) => {
 
