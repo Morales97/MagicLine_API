@@ -18,6 +18,14 @@ exports.getAll = (req, res) => {
     }).sort({tram_num: 1})
 }
 
+exports.getIncidentsTram = (req, res) => {
+
+    Incident.find({tram_num: req.params.tramNum}, function(incs, err){
+        if (err) res.send(err);
+        res.send(incs)
+    }).sort({solved: 1})
+}
+
 // Create a new incident
 exports.create = (req, res) => {
 

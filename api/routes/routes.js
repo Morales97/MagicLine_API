@@ -148,7 +148,15 @@ module.exports = function(app) {
   ])
 
   app.get("/incidents", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
     IncidentsController.getAll
+  ])
+
+  app.get("/incidentsTram/:tramNum", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
+    IncidentsController.getIncidentsTram
   ])
 
   app.post("/incidentCategory", [
