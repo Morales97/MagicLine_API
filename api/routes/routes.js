@@ -1,6 +1,7 @@
 const UsersController = require("../controllers/user.controller");
 const TramsController = require("../controllers/tram.controller");
 const IncidentsController = require("../controllers/incident.controller");
+const EventsController = require("../controllers/event.controller");
 const VerifyUserMiddleware = require("../auth/middlewares/verify.user.middleware");
 const AuthorizationController = require("../auth/controllers/authorization.controller");
 const AuthValidationMiddleware = require("../auth/middlewares/auth.validation.middleware");
@@ -178,4 +179,13 @@ module.exports = function(app) {
     IncidentsController.commentIncident
   ])
 
+// ****************************** EVENTS ******************************
+
+  app.get("/events", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
+    EventsController.getAll
+  ])
+
 };
+
