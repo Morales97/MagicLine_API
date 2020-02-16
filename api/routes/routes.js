@@ -20,7 +20,11 @@ module.exports = function(app) {
   // ****************************** USER ******************************
 
   // Crea usuari
-  app.post("/users", [UsersController.insert]);
+  app.post("/users", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
+    UsersController.insert
+  ]);
 
   // Llista tots els usuaris
   app.get("/users", [
