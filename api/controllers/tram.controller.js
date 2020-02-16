@@ -130,7 +130,12 @@ exports.changeAvitRebut = (req, res) => {
         Tram.findById(_id, function (err, tram) {
             if (err) res.send(err);
             tram.avituallament_rebut = req.body.avituallament_rebut;
-            EventController.createEvent(tram, req, "Canvia avituallament_rebut a " + req.body.material_rebut);
+            if(tram.avituallament_rebut == true){
+                EventController.createEvent(tram, req, "Avituallament rebut");
+            } else {
+                EventController.createEvent(tram, req, "Canvia avituallament_rebut a false");
+            }
+
             tram.save(function (err, updatedTram) {
                 if (err) res.send(err);
                 res.send(updatedTram);
@@ -150,7 +155,11 @@ exports.changeMaterialRebut = (req, res) => {
         Tram.findById(_id, function (err, tram) {
             if (err) res.send(err);
             tram.material_rebut = req.body.material_rebut;
-            EventController.createEvent(tram, req, "Canvia material_rebut a " + req.body.material_rebut);
+            if(tram.material_rebut == true){
+                EventController.createEvent(tram, req, "Material rebut");
+            } else {
+                EventController.createEvent(tram, req, "Canvia material_rebut a false");
+            }
             tram.save(function (err, updatedTram) {
                 if (err) res.send(err);
                 res.send(updatedTram);
