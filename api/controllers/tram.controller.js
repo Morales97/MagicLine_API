@@ -118,3 +118,43 @@ exports.closeTram = (req, res) => {
     console.log("close tram")
     changeState(req, res, CLOSED, 'Close tram');
 }
+
+// Avituallament
+// body: {tram_num: X, avituallament_rebut: T/F}
+exports.changeAvitRebut = (req, res) => {
+    // 1. Trobem el _id a partir del tramNum
+    Tram.findOne({num: req.body.tram_num}, '_id', function (err, _id) {
+        if (err) res.send(err);
+        // 2. Trobem el tram i el modifiquem
+        // Motiu: només findById retorna un objecte Tram que permet fer tram.save
+        Tram.findById(_id, function (err, tram) {
+            if (err) res.send(err);
+            tram.avituallament_rebut = req.body.avituallament_rebut;
+            EventController.createEvent(tram, req, "Canvia avituallament_rebut a " + req.body.material_rebut);
+            tram.save(function (err, updatedTram) {
+                if (err) res.send(err);
+                res.send(updatedTram);
+            });
+        });
+    });
+}
+
+// Material
+// body: {tram_num: X, material_rebut: T/F}
+exports.changeMaterialRebut = (req, res) => {
+    // 1. Trobem el _id a partir del tramNum
+    Tram.findOne({num: req.body.tram_num}, '_id', function (err, _id) {
+        if (err) res.send(err);
+        // 2. Trobem el tram i el modifiquem
+        // Motiu: només findById retorna un objecte Tram que permet fer tram.save
+        Tram.findById(_id, function (err, tram) {
+            if (err) res.send(err);
+            tram.material_rebut = req.body.material_rebut;
+            EventController.createEvent(tram, req, "Canvia material_rebut a " + req.body.material_rebut);
+            tram.save(function (err, updatedTram) {
+                if (err) res.send(err);
+                res.send(updatedTram);
+            });
+        });
+    });
+}

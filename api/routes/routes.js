@@ -139,6 +139,20 @@ module.exports = function(app) {
     TramsController.closeTram
   ]);
 
+   // Avituallament
+  app.post("/avituallament", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
+    TramsController.changeAvitRebut
+  ]);
+
+   // Material
+  app.post("/material", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
+    TramsController.changeMaterialRebut
+  ]);
+
 
 // ****************************** INCIDENTS ******************************
 
