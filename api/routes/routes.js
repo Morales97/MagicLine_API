@@ -144,14 +144,14 @@ module.exports = function(app) {
   ]);
 
    // Avituallament
-  app.post("/avituallament", [
+  app.post("/avituallament/:tramNum", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.changeAvitRebut
   ]);
 
    // Material
-  app.post("/material", [
+  app.post("/material/:tramNum", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.changeMaterialRebut
@@ -206,4 +206,3 @@ module.exports = function(app) {
   ])
 
 };
-

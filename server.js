@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 var fs = require('fs');
 var http = require('http');
 
-
 // defining the Express app
 const app = express(),
   User = require('./api/models/models'),
