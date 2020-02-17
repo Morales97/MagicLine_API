@@ -179,11 +179,12 @@ exports.changePicnicRebut = (req, res) => {
         Tram.findById(_id, function (err, tram) {
             if (err) res.send(err);
             tram.picnic_rebut = req.body.picnic_rebut;
-            if(tram.material_rebut == true){
+            if(tram.picnic_rebut == true){
                 EventController.createEvent(tram, req, "Picnic rebut");
             } else {
                 EventController.createEvent(tram, req, "Canvia picnic_rebut a false");
             }
+            console.log(tram)
             tram.save(function (err, updatedTram) {
                 if (err) res.send(err);
                 res.send(updatedTram);

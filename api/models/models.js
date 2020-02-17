@@ -35,7 +35,8 @@ const TramSchema = new Schema({
     incidents: [{             // array de incidències
         type: ObjectId,
         ref: 'Incident'
-    }]
+    }],
+    picnic_rebut: Boolean
 });
 
 // **** Incidènica ****: Un problema que reporta el coordinador de tram
