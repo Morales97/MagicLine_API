@@ -8,7 +8,7 @@ exports.getAll = (req, res) => {
     Event.find({}, function(events, err){
         if(err) res.send(err);
         res.send(events)
-    }).sort({date: 1})
+    }).sort({date: -1})
 }
 
 // Crea un nou event que registra l'acció
