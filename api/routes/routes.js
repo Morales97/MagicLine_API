@@ -144,14 +144,14 @@ module.exports = function(app) {
   ]);
 
    // Avituallament
-  app.post("/avituallament/:tramNum", [
+  app.post("/avituallament", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.changeAvitRebut
   ]);
 
    // Material
-  app.post("/material/:tramNum", [
+  app.post("/material", [
     AuthValidationMiddleware.validJWTNeeded,
     AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
     TramsController.changeMaterialRebut
