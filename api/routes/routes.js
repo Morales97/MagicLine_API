@@ -157,6 +157,13 @@ module.exports = function(app) {
     TramsController.changeMaterialRebut
   ]);
 
+   // Picnic
+  app.post("/picnic", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.onlyOwnerOfTramOrAdmin,
+    TramsController.changePicnicRebut
+  ]);
+
 
 // ****************************** INCIDENTS ******************************
 

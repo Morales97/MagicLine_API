@@ -167,3 +167,27 @@ exports.changeMaterialRebut = (req, res) => {
         });
     });
 }
+
+// Picnic
+// body: {tram_num: X, picnic_rebut: T/F}
+exports.changePicnicRebut = (req, res) => {
+    // 1. Trobem el _id a partir del tramNum
+    Tram.findOne({num: req.body.tram_num}, '_id', function (err, _id) {
+        if (err) res.send(err);
+        // 2. Trobem el tram i el modifiquem
+        // Motiu: només findById retorna un objecte Tram que permet fer tram.save
+        Tram.findById(_id, function (err, tram) {
+            if (err) res.send(err);
+            tram.picnic_rebut = req.body.picnic_rebut;
+            if(tram.material_rebut == true){
+                EventController.createEvent(tram, req, "Picnic rebut");
+            } else {
+                EventController.createEvent(tram, req, "Canvia picnic_rebut a false");
+            }
+            tram.save(function (err, updatedTram) {
+                if (err) res.send(err);
+                res.send(updatedTram);
+            });
+        });
+    });
+}
