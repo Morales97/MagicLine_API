@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Event = mongoose.model('Event');
 const { spawn } = require('child_process');
-const cmd = spawn("mongo < /opt/mongo_reset.js");
+
 
 exports.getAll = (req, res) => {
     Event.find({}, function(events, err){
@@ -53,6 +53,7 @@ exports.createEventIncident = (tram_id, tram_num, incident_id, req, desc) => {
 }
 
 exports.eraseAllData = (req, res) => {
+    var cmd = spawn("mongo < /opt/mongo_reset.js");
 
     cmd.stdout.on("data", data => {
         console.log(`stdout: ${data}`);
@@ -65,4 +66,6 @@ exports.eraseAllData = (req, res) => {
     cmd.on("close", function(code) {
         console.log(`child process exited with code ${code}`);
     });
+
+    res.status(200).send()
 }
