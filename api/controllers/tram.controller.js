@@ -18,6 +18,7 @@ exports.insert = (req, res) => {
     }
     req.body.material_rebut = false;
     req.body.avituallament_rebut = false;
+    req.body.picnic_rebut = false;
 
     // save tram
     var new_tram = new Tram(req.body);
