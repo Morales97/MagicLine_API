@@ -61,4 +61,8 @@ exports.eraseAllData = (req, res) => {
     cmd.stderr.on("data", data => {
         console.log(`stderr: ${data}`);
     });
+
+    cmd.on("close", function(code) {
+        console.log(`child process exited with code ${code}`);
+    });
 }
