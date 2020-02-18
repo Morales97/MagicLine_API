@@ -212,4 +212,13 @@ module.exports = function(app) {
     EventsController.getAll
   ])
 
+  // ****************************** RESET ******************************
+
+  app.get("/reset", [
+    AuthValidationMiddleware.validJWTNeeded,
+    AuthPermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
+    EventsController.eraseAllData
+  ])
+
+
 };
