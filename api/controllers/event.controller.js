@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Event = mongoose.model('Event');
-const { spawn } = require('child_process');
+const { exec } = require('child_process');
 
 
 exports.getAll = (req, res) => {
@@ -53,19 +53,15 @@ exports.createEventIncident = (tram_id, tram_num, incident_id, req, desc) => {
 }
 
 exports.eraseAllData = (req, res) => {
-    var cmd = spawn("mongo < /opt/mongo_reset.js");
-
-    cmd.stdout.on("data", data => {
-        console.log(`stdout: ${data}`);
-    });
-    
-    cmd.stderr.on("data", data => {
-        console.log(`stderr: ${data}`);
-    });
-
-    cmd.on("close", function(code) {
-        console.log(`child process exited with code ${code}`);
-    });
-
-    res.status(200).send()
+    exec('mongo < /opt/mongo_reset.js', (err, stdout, stderr) => {
+        if (err) {
+          // node couldn't execute the command
+          res.send(err);
+        }
+      
+        // the *entire* stdout and stderr (buffered)
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+        res.send(`${stdout}`);
+      });
 }
