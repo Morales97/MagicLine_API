@@ -1,21 +1,5 @@
 # rest-apiML
-per instal·lar dependencies (llistades a package.json):  
-`npm init`  
-`npm install`
 
-## Run API
-`node server.js` 
+Please refer to README of the main project repository https://github.com/Morales97/MLapp for information about this app.
 
-## MongoDB
-### Installment on macOS
-Instal·lar brew: `brew tap mongodb/brew`  
-Instal·lar mongodb: `brew install mongodb-community@4.2`  
-Run mongoDB as a service: `brew services start mongodb-community@4.2`  
-Run `mongo`from anywhere to start the shell  
-`show dbs` a la mongo shell per mostrar les dbs  
-Al correr la rest API, automàticament es crea una db anomenada magicline. 
-
-## Fer connexió segura amb SSL
-### Atenció: només fer en local. NO FER EN PRODUCTION
-Crear claus: https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/  
-Utilitzar-les a Node: https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-node-js/  
+In this repository you can find the backend of the project, developed with Node.js and relying on MongoDB for the database. It consists on a REST API that responds to HTTPS requests made on the frontend and proxied to the backend.
