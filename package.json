@@ -15,7 +15,7 @@
     "express": "^4.8.7",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^7.3.0",
-    "moment": "^2.17.1",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.13",
     "mongodb": "^3.4.0",
     "mongodb-memory-server": "^6.0.2",
